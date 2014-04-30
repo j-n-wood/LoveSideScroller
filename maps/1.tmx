@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="world_tiles_64_1" tilewidth="64" tileheight="32" spacing="2" margin="2">
+  <image source="world_tiles_64_1.png" width="1024" height="512"/>
+  <tile id="13">
+   <properties>
+    <property name="ladder" value=""/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="ladder" value=""/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="ladder" value=""/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="ladder" value=""/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="breakable" value="5"/>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="63">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="66">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="67">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="70">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="71">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="72">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="77">
+   <properties>
+    <property name="breakable" value="5"/>
+   </properties>
+  </tile>
+  <tile id="86">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="97">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="106">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="108">
+   <properties>
+    <property name="ladder" value=""/>
+   </properties>
+  </tile>
+  <tile id="111">
+   <properties>
+    <property name="breakable" value="5"/>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="124">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="129">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="130">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="131">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="132">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="133">
+   <properties>
+    <property name="opendoor" value=""/>
+   </properties>
+  </tile>
+  <tile id="138">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="139">
+   <properties>
+    <property name="solid" value="1"/>
+   </properties>
+  </tile>
+  <tile id="148">
+   <properties>
+    <property name="opendoor2" value=""/>
+   </properties>
+  </tile>
+  <tile id="150">
+   <properties>
+    <property name="breakable" value="5"/>
+   </properties>
+  </tile>
+  <tile id="163">
+   <properties>
+    <property name="opendoor3" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="226" name="items" tilewidth="32" tileheight="32">
+  <image source="items.png" width="512" height="512"/>
+ </tileset>
+ <layer name="World" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2E1rE0EcB+CpIBX0oseePAgFT17sWW1AkOKlX0B73ZsvBy8KvoAWqhfBD+A36Cfsf3GWrMs0YbuTEtjngR87mQxLkl82O2SRUtqJ3MipaT9yq1KeV35t22oRuR25k1PTQdLHWG0fryKvc2rSx3htH7vp33ver3xufYzX7+Og8rn1MZ4+tst19fFg4nFOfeylzffxYeJRH9P1+3g08aiP6fp9NJG7kSeRp708u2R+uEYf0w37aO9T9yI3B+nmTwrPddHHdF0fTVr20fXztjA+GayZ6/5qXR+Hed0qfwpzq/p4Xxjro14fLwtzZ5HPkTeRr2l9H7/zmk+R+3nuY3481z5e5DS98bCPpnCe0tzP9H8f3XXS3r9LffxNy84e5uPjNN/ro/0+H+U0vfG6Pr5EjiPfBvO/UrmP9jN/l5Z9dOPztOzje+RH5DTNq4/L9phXzabOO5c+aupfN6V97ZToY7zu96hV63/Eue2vatLHdmm7qH3fKN2bAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgM24AABaVNs=
+  </data>
+ </layer>
+ <objectgroup name="Switches" width="100" height="100">
+  <object name="Switch1" type="switch" gid="226" x="2016" y="208">
+   <properties>
+    <property name="action" value="toggle"/>
+    <property name="target" value="Trapdoor1"/>
+    <property name="targetAction" value="toggle"/>
+   </properties>
+  </object>
+  <object name="Trapdoor1" type="trapdoor" gid="87" x="1728" y="320"/>
+  <object name="Trapdoor2" type="trapdoor" gid="87" x="2113" y="320"/>
+  <object name="Switch2" type="switch" gid="226" x="1863" y="208">
+   <properties>
+    <property name="action" value="toggle"/>
+    <property name="target" value="Trapdoor2"/>
+    <property name="targetAction" value="toggle"/>
+   </properties>
+  </object>
+  <object name="Door1" type="door" x="2240" y="416" width="64" height="96">
+   <properties>
+    <property name="key" value="trapdoorkey"/>
+    <property name="solid" value=""/>
+    <property name="x" value="36"/>
+    <property name="y" value="14"/>
+   </properties>
+  </object>
+  <object name="Switch2" type="switch" gid="226" x="1915" y="240">
+   <properties>
+    <property name="action" value="toggle"/>
+    <property name="targetAction" value="destroy"/>
+    <property name="targetEntity" value="Grinder1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Enemies" width="100" height="100">
+  <object type="makeEnemy_0" x="635" y="346"/>
+  <object type="makeEnemy_0" x="411" y="396"/>
+  <object type="makeEnemy_0" x="860" y="336"/>
+  <object type="makeEnemy_0" x="1454" y="314">
+   <properties>
+    <property name="life" value="12"/>
+   </properties>
+  </object>
+  <object type="makeEnemy_1" x="2553" y="161"/>
+  <object type="makeEnemy_2" x="1187" y="264"/>
+  <object type="makeEnemy_3" x="2146" y="92"/>
+  <object type="makeEnemy_3" x="2472" y="182"/>
+  <object name="Grinder1" type="grinder_0" x="2272" y="256"/>
+ </objectgroup>
+ <objectgroup name="Items" width="100" height="100">
+  <object name="trapdoorkey" type="key" gid="242" x="1955" y="197"/>
+  <object type="crystal" gid="258" x="745" y="364"/>
+  <object type="gold" gid="256" x="2009" y="391"/>
+  <object type="crystal" gid="259" x="569" y="248"/>
+  <object type="crystal" gid="260" x="472" y="260"/>
+  <object type="crystal" gid="261" x="1380" y="349"/>
+  <object type="crystal" gid="260" x="472" y="260"/>
+ </objectgroup>
+</map>
