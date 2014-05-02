@@ -1,5 +1,14 @@
 entityLib = {}
 
+entityLib.consts = 
+	{ 
+		itemCategory = 2,
+		objectCategory = 4,
+		enemyShotCategory = 7,
+		shotCategory = 8, 
+		playerCategory = 9,
+	}
+
 entityLib.setState = function(entity, stateName)
 	local newState = entity.states[stateName]
 	if newState then

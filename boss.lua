@@ -91,9 +91,9 @@ local boss_1_attackEvents =
 		TEsound.play(soundCache.boss_shoot_1)
 	end,
 	[17] = function( enemy )
-		app.playerLevel:spawnThrown( enemy, -540.0, 250.0 )
-		--app.playerLevel:spawnThrown( enemy, -540.0, 270.0 )
-		--app.playerLevel:spawnThrown( enemy, -540.0, 290.0 )
+		app.playerLevel:spawnEnemyThrown( enemy, -520.0, 250.0, entityLib.consts.enemyShotCategory )
+		app.playerLevel:spawnEnemyThrown( enemy, -540.0, 270.0, entityLib.consts.enemyShotCategory )
+		app.playerLevel:spawnEnemyThrown( enemy, -560.0, 290.0, entityLib.consts.enemyShotCategory )
 	end
 }
 

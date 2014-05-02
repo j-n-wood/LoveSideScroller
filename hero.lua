@@ -451,6 +451,15 @@ heroLib.onContactGrinder = function(thisEntity, otherEntity, begin)
 		thisEntity.controls.sensedGrinder = thisEntity.controls.sensedGrinder - 1
 	end
 end
+
+heroLib.onContactEnemyShot = function(thisEntity, otherEntity, begin)
+	local dam = math.min(otherEntity.life,thisEntity.life)
+	if (dam > 0) then
+		thisEntity.takeDamage(thisEntity,otherEntity.life)
+		otherEntity.takeDamage(otherEntity,otherEntity.life)
+		TEsound.play({soundCache['hurt_1'],soundCache['hurt_2']})
+	end
+end
 	
 heroLib.makeHero = function(level,x,y)
 	heroLib.load()
@@ -477,6 +486,7 @@ heroLib.makeHero = function(level,x,y)
 	
 	entity.onContact['enemy'] = heroLib.onContactEnemy
 	entity.onContact['grinder'] = heroLib.onContactGrinder
+	entity.onContact['enemyShot'] = heroLib.onContactEnemyShot
 	
 	level:addObject('entities',entity)
 	return entity

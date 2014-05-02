@@ -535,22 +535,24 @@ function onShotContactEnemy( shot, enemy )
 	shot.alive = false	
 end
 
-function game:spawnThrown( entity, vx, vy )
-	local biff = newEntity(entity.x,entity.y - 80,'shot')
-	--biff.onContact['enemy'] = onShotContactEnemy
+function game:spawnEnemyThrown( entity, vx, vy, category )
+	local biff = newEntity(entity.x,entity.y - 80,'enemyShot')
+	biff.onContact['hero'] = onShotContactEnemy
 	imageLib.addRenderableSprite(biff.renderables,heroImages["common"],1.0,1.0,testFrame)
 	self:addSphereToEntity(8,biff)
 	self:addObject('shots',biff)
 	biff.b:setLinearVelocity(vx,vy)
 	biff.b:setAngularVelocity(10)
 	biff.f:setDensity(0.1)
-	biff.f:setCategory(8)
-	biff.f:setMask(8) -- shots + player
-	biff.f:setMask(9)
+	biff.f:setCategory(category)
+	biff.f:setMask(category)
 	biff.f:setRestitution(1.0)
 	biff.f:setUserData( {entity = biff,} )
 	biff.onExpire = shotExpire
+	biff.life = 7 --damage
 	biff.lifeTime = 3.0
+	
+	return biff
 end
 
 weaponTypes = 
