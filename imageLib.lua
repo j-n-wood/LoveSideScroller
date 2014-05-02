@@ -68,8 +68,10 @@ imageLib.makeSpriteSheet = function(target, name, fileName, inmode, trans, quads
 	local ih = sprite.image:getHeight()	
 	
 	--todo - per-quad hotspots?
-	for idx, inq in ipairs(sprite.sheet) do
-		print("SpriteSheet: ",inq.x, inq.y, inq.w, inq.h, iw, ih)
+	--for idx, inq in ipairs(sprite.sheet) do
+	for idx = 1,#quads,1 do
+		inq = quads[idx]
+		print("SpriteSheet: ",idx,inq.x, inq.y, inq.w, inq.h, iw, ih)
 		local q = love.graphics.newQuad(inq.x, inq.y, inq.w, inq.h, iw, ih)
 		table.insert(sprite.quads,q)
 		if (hotspot == nil) then
@@ -122,6 +124,10 @@ imageLib.drawSprite = function(d, inx, iny)
 		local theFrame = math.floor(d.frame)
 		local ox, oy = d.sprite.ox, d.sprite.oy
 		if (d.sprite.sheet) then
+			if (not d.sprite.sheet[theFrame]) then
+				print('Missing frame',theFrame)
+				return
+			end
 			ox = d.sprite.sheet[theFrame].ox
 			oy = d.sprite.sheet[theFrame].oy
 		end

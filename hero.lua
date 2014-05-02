@@ -15,6 +15,7 @@ heroLib.consts =
 heroLib.load = function()
 	if (not heroLib.loaded) then
 		imageLib.makeTiledSprite(heroImages,"hero","hero_2.png","alpha",1.0,1.0,8,5.3333333,'bottom',true)
+		
 		local commonQuads = 
 		{
 			{ x = 0, y = 0, w = 32, h = 32, },
@@ -29,10 +30,11 @@ heroLib.load = function()
 		
 		--insert 24 death sprites
 		--frames 9 - 33
-		for idy = 0,2,1 do
-			for idx = 0,8,1 do
-				local frame = { x = idx * 64, y = 96 + idy * 64, w = 64, h = 64, },	--death sprites
-				table.insert(commonQuads,frame)
+		for idy = 0,2,1 do			
+			for idx = 0,8,1 do				
+				local frame = { x = idx * 64, y = 96 + idy * 64, w = 64, h = 64, }	--death sprites				
+				table.insert(commonQuads,frame)				
+				print('Quadcount',#commonQuads,table.getn(commonQuads))
 			end
 		end
 		
@@ -41,16 +43,16 @@ heroLib.load = function()
 		--45 spark
 		--46 fireball
 		for idx = 0,12,1 do
-			local frame = { x = idx * 32, y = 288, w = 32, h = 32, },
+			local frame = { x = idx * 32, y = 288, w = 32, h = 32, }
 			table.insert(commonQuads,frame)
 		end
 		
 		--47 - 53 - pickup smoke
 		for idx = 0,7,1 do
-			local frame = { x = idx * 32, y = 320, w = 32, h = 32, },
+			local frame = { x = idx * 32, y = 320, w = 32, h = 32, }
 			table.insert(commonQuads,frame)
 		end
-		
+		print('Quadcount',#commonQuads,table.getn(commonQuads))
 		imageLib.makeSpriteSheet(heroImages,"common","common.png","alpha",true,commonQuads)
 		heroLib.loaded = true
 	end
@@ -419,7 +421,7 @@ heroLib.addWalkerBody = function(r,entity)
 	entity.f:setUserData(bodyResponse)
 	entity.f:setCategory(9)
 	entity.f:setMask(2)	--not items
-	entity.f:setMask(8)
+	entity.f:setMask(8) --not player shots
 	
 	--print('density',entity.f:getDensity())
 		
@@ -433,7 +435,7 @@ heroLib.addWalkerToEntity = function(world, w, h, entity)
 end
 
 heroLib.onContactEnemy = function(thisEntity, otherEntity, begin)
-	local dam = otherEntity.life
+	local dam = math.min(otherEntity.life,thisEntity.life)
 	if (dam > 0) then
 		thisEntity.takeDamage(thisEntity,otherEntity.life)
 		otherEntity.takeDamage(otherEntity,otherEntity.life)

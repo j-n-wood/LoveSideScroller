@@ -28,5 +28,7 @@ loadSounds( {'door_open','door_close',},soundCache)
 loadSounds( {'explosion_ground_1','explosion_ground_2',},soundCache)
 loadSoundSet( 'itemBounce', {'item_bounce_1','item_bounce_2','item_bounce_3','item_bounce_4',},soundCache)
 loadSoundSet( 'spawn', {'spawn_high','spawn_low','spawn_mid','spawn_mid2',},soundCache)
+loadSoundSet( 'bossWalk', {'boss_walk_1','boss_walk_2',},soundCache)
+loadSound('boss_shoot_1',soundCache)
 
 return soundCache

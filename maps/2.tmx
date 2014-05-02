@@ -160,7 +160,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt1ktrE2EUBuBToVTQTV269wJKoSLq0ktBkOJvaLMdUOiyIoh023bp3/UMnSGfw1wiLSTtPA+85Js5XyCZN5nkICK2MveatJ7FtLE93dn9a+bzCq/nLjjIPMg8bNJ6s8Jzx/Z0Z/pYTd3HUea4SUsf61H3sRNX77m8x+hjPco+ymuoj/XQx2a5DX1UMa8+Hsdm9VH1HOtj2k32UQ2s9XHlpvuor+lu5n3mQ5GPxflFZ1bu0ce0/+2j/p16lNnupD2/6Jm10ce0VfuoYtnH2D1rMbJHH0ufmn1d5Z4/I7Pr9PEt8z30cV6sh/oo93wdmP3OnGTOYrqP58WeF5mXmSeZpzHfPr40uSjW3T6q5vGi51x0ZmUf7fdkN/r7+BnLPn5l9jKnmR8xzz7qz/Rhk8tiPdTHZXFcxb+dtLO+Poa+J6+L2dvMu8x+5lXMp4++/5ebmLn0AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABw2/wFlFVJNQ==
+   eJzt1k1rE1EUBuBroSi0m7p0bytYChZRl1oDBRF/g812oEKXLYVS3Jos/buewRlyHeYjEjBj53ngJZM5J5DkTSaZpZQeRXaq1I7SsL6d5uzJhjlf4/k8BLPIXmS/Su3NGo/t22nO9LGeso+vkYsqNX1sR9nH4/T7NefXGH1sR95H/h7qYzv0MS76GJeyj2dJH2Ohj3H5V30UkYPI+8iHLGfZ+Xljlu/oY9jf9lH+Tj2N7DZSn5+3zOroY9i6fRRp1UffNWnes6OPlY/VXlO+87Nntkkfl5FvSR8/suOuPvKdLx2z+8hV5Hsa7uNFtvMychx5HjlM0+3jU5VFdtzso6huFy3nUmOW91F/Tw5Sex+3adXHXeQkch25SdPso/xMf66yzI67+lhm94v0Zyf1rK2Pru/J62z2NvIu8ipymqbTR9v/yzFmKn0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPxvfgHvyEbj
   </data>
  </layer>
  <objectgroup name="Switches" width="100" height="100">
@@ -181,7 +181,9 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Enemies" width="100" height="100"/>
+ <objectgroup name="Enemies" width="100" height="100">
+  <object name="boss1" type="makeBoss_1" x="2508" y="161"/>
+ </objectgroup>
  <objectgroup name="Items" width="100" height="100">
   <object type="gold" gid="256" x="2125" y="380"/>
  </objectgroup>

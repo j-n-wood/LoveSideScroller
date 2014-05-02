@@ -18,8 +18,16 @@ entityLib.updateEntity = function(entity, dt)
 			--+0.1 to ensure some delta, for single-frame states
 			entity.state.delta = math.sign(entity.state.frameEnd - entity.state.frameStart + 0.1) * 10.0 --10 fps
 		end
-		
+		local prevFrame = math.floor(entity.renderables[1].frame)
 		entity.renderables[1].frame = entity.renderables[1].frame + dt * entity.state.delta
+		local currFrame = math.floor(entity.renderables[1].frame)
+		if (math.abs(currFrame - prevFrame) > 0.01) then
+			--changed frame
+			if (entity.state.events and entity.state.events[currFrame]) then
+				entity.state.events[currFrame](entity)
+			end
+		end
+		
 		local sequenceComplete = false
 		if (entity.state.delta > 0.0) then
 			if ((entity.renderables[1].frame - entity.state.frameEnd) >= 1.0) then

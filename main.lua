@@ -7,6 +7,7 @@ require 'class'
 require 'hero'
 require 'enemy'
 require 'traps'
+require 'boss'
 
 --TODO
 --reset state
@@ -18,6 +19,8 @@ require 'traps'
 --make enemies reference map objects?
 --flight/ walk paths
 --shooting enemies
+
+testFrame = 48
 
 app = { }
 game = {}
@@ -532,10 +535,10 @@ function onShotContactEnemy( shot, enemy )
 	shot.alive = false	
 end
 
-function game:spawnThrown( hero, vx, vy )
-	local biff = newEntity(hero.x,hero.y - 40,'shot')
-	biff.onContact['enemy'] = onShotContactEnemy
-	imageLib.addRenderableSprite(biff.renderables,heroImages["common"],1.0,1.0,2)
+function game:spawnThrown( entity, vx, vy )
+	local biff = newEntity(entity.x,entity.y - 80,'shot')
+	--biff.onContact['enemy'] = onShotContactEnemy
+	imageLib.addRenderableSprite(biff.renderables,heroImages["common"],1.0,1.0,testFrame)
 	self:addSphereToEntity(8,biff)
 	self:addObject('shots',biff)
 	biff.b:setLinearVelocity(vx,vy)
@@ -544,6 +547,7 @@ function game:spawnThrown( hero, vx, vy )
 	biff.f:setCategory(8)
 	biff.f:setMask(8) -- shots + player
 	biff.f:setMask(9)
+	biff.f:setRestitution(1.0)
 	biff.f:setUserData( {entity = biff,} )
 	biff.onExpire = shotExpire
 	biff.lifeTime = 3.0
@@ -790,13 +794,7 @@ function game:updateControls(dt)
 	end
 	
 	--TODO - better callback/event here
-	if (hero.controls.throw) then
-		--[[
-		self.spawnThrown( self, hero, 640 * hero.renderables[1].sx, -128 )
-		self.spawnThrown( self, hero, 640 * hero.renderables[1].sx, -128 + 250 )
-		self.spawnThrown( self, hero, 640 * hero.renderables[1].sx, -128 - 250 )
-		]]--
-		
+	if (hero.controls.throw) then				
 		if (hero.weapons.main.type) then
 			weaponTypes[hero.weapons.main.type](self, hero, 640 * hero.renderables[1].sx, -128)
 			if (hero.weapons.main.count > 1) then
@@ -1131,7 +1129,13 @@ function love.keypressed(key, unicode)
 	if (key == '5') then
 		local hero = app.player.hero
 		hero.weapons.main.type = 'knife'
-	end	
+	end
+	
+	if (key == '6') then
+		testFrame = testFrame + 1
+	elseif (key == '7') then
+		testFrame = testFrame - 1
+	end
 end
 
 function love.draw()
