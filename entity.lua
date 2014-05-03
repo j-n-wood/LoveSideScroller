@@ -7,6 +7,7 @@ entityLib.consts =
 		enemyShotCategory = 7,
 		shotCategory = 8, 
 		playerCategory = 9,
+		enemyCategory = 10,
 	}
 
 entityLib.setState = function(entity, stateName)

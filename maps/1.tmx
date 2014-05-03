@@ -175,7 +175,7 @@
  </tileset>
  <layer name="World" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2E1rE0EcB+CpIBX0oseePAgFT17sWW1AkOKlX0B73ZsvBy8KvoAWqhfBD+A36Cfsf3GWrMs0YbuTEtjngR87mQxLkl82O2SRUtqJ3MipaT9yq1KeV35t22oRuR25k1PTQdLHWG0fryKvc2rSx3htH7vp33ver3xufYzX7+Og8rn1MZ4+tst19fFg4nFOfeylzffxYeJRH9P1+3g08aiP6fp9NJG7kSeRp708u2R+uEYf0w37aO9T9yI3B+nmTwrPddHHdF0fTVr20fXztjA+GayZ6/5qXR+Hed0qfwpzq/p4Xxjro14fLwtzZ5HPkTeRr2l9H7/zmk+R+3nuY3481z5e5DS98bCPpnCe0tzP9H8f3XXS3r9LffxNy84e5uPjNN/ro/0+H+U0vfG6Pr5EjiPfBvO/UrmP9jN/l5Z9dOPztOzje+RH5DTNq4/L9phXzabOO5c+aupfN6V97ZToY7zu96hV63/Eue2vatLHdmm7qH3fKN2bAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgM24AABaVNs=
+   eJzt2D9rFEEcBuCJEBRME0urFELAysbUUQOCiI1fQNNeF02RJgH/gArGRvAD5Bv4Cf0t7nDrMhdZZ04O9nngZfbmhuHu3tvb5Y5SSluRG31a2o/capSnjV/bpjqK3I7s9GnpIOljqq6PV5HXfVrSx3RdHzfT7/e833hvfUw37OOg8d76mE4fm+V/9XGvcpxTH3fT+vs4qxz1UW/Yx4PKUR/1hn0sIruRw8ijQR6vmB+v0Ue9cR/ddepOZHuUPH9ceC5HH/VyH4u07CP386ZwfDxaM9f7q9o+fqyYv66P08KxPtr08WLF/NfIu8hJ5EP6ex/f+zUXkb1+7rx/PNc+nhXypF+XLUZ7jB9nl+nPPvJ50l2/S31cpWVn9/vxYZrv+dF9n58Xcl0f7yMvIx8Le39L5T66z/xtWvaRj3+mZR+fIp8jX9K8+lh1j/mvWde+c+mjpeF5U7qvrYk+psu/R51W/yPO7f6qJX1slq6L1teN0rUJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWI9flRBTjQ==
   </data>
  </layer>
  <objectgroup name="Switches" width="100" height="100">
@@ -213,8 +213,16 @@
  </objectgroup>
  <objectgroup name="Enemies" width="100" height="100">
   <object type="makeEnemy_0" x="635" y="346"/>
-  <object type="makeEnemy_0" x="411" y="396"/>
-  <object type="makeEnemy_0" x="860" y="336"/>
+  <object type="makeEnemy_0" x="411" y="396">
+   <properties>
+    <property name="shotType" value="bolt"/>
+   </properties>
+  </object>
+  <object type="makeEnemy_0" x="860" y="336">
+   <properties>
+    <property name="shotType" value="bolt"/>
+   </properties>
+  </object>
   <object type="makeEnemy_0" x="1454" y="314">
    <properties>
     <property name="life" value="12"/>

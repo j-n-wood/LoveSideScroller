@@ -5,6 +5,63 @@ require 'explosion'
 
 enemyLib = {}
 enemyImages = {}
+enemyLib.weapons = {}
+
+function onShotContactOpposition( shot, other, begin )	
+	shot.alive = false	
+end
+
+function onShotContactWorld( shot, other, begin )	
+	shot.alive = false	
+end
+
+--shot spawn fns
+enemyLib.weapons.bolt = function( enemy, dx, dy, vx, vy )
+	local biff = newEntity(enemy.x + dx,enemy.y + dy,'enemyShot')	
+	biff.onContact['hero'] = onShotContactOpposition
+	biff.onContact['world'] = onShotContactWorld
+	imageLib.addRenderableSprite(biff.renderables,heroImages["common"],1.0,1.0,48)
+	app.playerLevel:addSphereToEntity(8,biff)
+	app.playerLevel:addObject('shots',biff)
+	biff.b:setLinearVelocity(vx,vy)
+	biff.b:setAngularVelocity(10)
+	biff.b:setGravityScale(0.0)	--these float
+	biff.f:setDensity(0.1)
+	biff.f:setCategory(entityLib.consts.enemyShotCategory)
+	biff.f:setMask(entityLib.consts.enemyShotCategory)
+	biff.f:setMask(entityLib.consts.enemyCategory)
+	biff.f:setRestitution(0.2)
+	local shotResponse = {}
+	shotResponse.entity = biff
+	shotResponse.onContact = bodyContact
+	biff.f:setUserData( shotResponse )
+	biff.onExpire = shotExpire
+	biff.life = 5 --damage
+	biff.lifeTime = 3.0	
+	
+	return biff
+end
+
+enemyLib.weapons.bouncingFireball = function( enemy, dx, dy, vx, vy )
+	local biff = newEntity(enemy.x + dx,enemy.y + dy,'enemyShot')
+	biff.onContact['hero'] = onShotContactOpposition
+	imageLib.addRenderableSprite(biff.renderables,heroImages["common"],1.0,1.0,48)
+	app.playerLevel:addSphereToEntity(8,biff)
+	app.playerLevel:addObject('shots',biff)
+	biff.b:setLinearVelocity(vx,vy)
+	biff.b:setAngularVelocity(10)
+	biff.f:setDensity(0.1)
+	biff.f:setCategory(entityLib.consts.enemyShotCategory)
+	biff.f:setMask(entityLib.consts.enemyShotCategory)
+	biff.f:setMask(entityLib.consts.enemyCategory)
+	biff.f:setRestitution(1.0)
+	biff.f:setUserData( {entity = biff,} )
+	biff.onExpire = shotExpire
+	biff.life = 7 --damage
+	biff.lifeTime = 3.0
+	
+	return biff
+end
 
 imageLib.makeTiledSprite(enemyImages,"enemy_0","enemy_0.png","alpha",1.0,1.0,8,8,'bottom',true)
 
@@ -18,6 +75,22 @@ end
 enemyLib.enemy0Update = function(enemy, dt)
 	if (enemy.controls.turnCooldown > 0.0) then
 		enemy.controls.turnCooldown = enemy.controls.turnCooldown - dt
+	end
+	
+	if (enemy.shotType) then
+		if (enemy.controls.shootCooldown > 0.0) then
+			enemy.controls.shootCooldown = enemy.controls.shootCooldown - dt
+		end
+		
+		if (enemy.controls.shootCooldown <= 0.0) then
+			--spawn shot
+			print('SHOOT')
+			local weaponFunc = enemyLib.weapons[enemy.shotType]
+			if (weaponFunc) then
+				weaponFunc(enemy,0,-48,enemy.state.sx * 320,0.0)
+			end
+			enemy.controls.shootCooldown = 3.2
+		end
 	end
 end
 
@@ -176,15 +249,17 @@ enemyLib.makeWalkerEnemy = function(level,x,y,states)
 	local entity = newEntity(x,y,'enemy')
 	entity.life = 5
 	entity.walkForce = 400
+	entity.shotType = nil	--explicit
 	imageLib.addRenderableSprite(entity.renderables,enemyImages["enemy_0"],1.0,1.0)
 	entity.states = states
 	--entity.setState = setState
 	entity.setState(entity,'walkRight')
-	entity.controls = { jumpCooldown = 0, sensedGround = 0, walkCooldown = 0, turnCooldown = 0, }
+	entity.controls = { jumpCooldown = 0, sensedGround = 0, walkCooldown = 0, turnCooldown = 0, shootCooldown = 0, }
 	entity.onDeath = enemyLib.defaultDeath
 	entity.update = enemyLib.enemy0Update
 	level:addWalkerToEntity(60,60,entity)
 	entity.f:setMask(2)	--not items
+	entity.f:setCategory(entityLib.consts.enemyCategory)
 	level:addObject('entities',entity)
 	entity.onContact['shot'] = enemyLib.onContactShot
 	return entity
@@ -202,6 +277,7 @@ enemyLib.makeFlapperEnemy = function(level,x,y,states)
 	entity.onDeath = enemyLib.defaultDeath
 	entity.update = enemyLib.enemy0Update
 	level:addFlyerToEntity(64,64,entity)
+	entity.f:setCategory(entityLib.consts.enemyCategory)
 	level:addObject('entities',entity)
 	entity.onContact['shot'] = enemyLib.onContactShot
 	return entity

@@ -19,8 +19,8 @@ require 'boss'
 --make enemies reference map objects?
 --flight/ walk paths
 --shooting enemies
-
-testFrame = 48
+--drop sensors for walkers (like mantle, so can turn back at edges)
+--hero change size when crouched
 
 app = { }
 game = {}
@@ -182,6 +182,10 @@ function game:addSphereToEntity(radius, entity)
 	entity.f:setRestitution(0.6)	
 end
 
+--userData on fixture will be treated as a table and call 'onContact' of that
+--entities define a 'response' objected so different fixtures/sensors can perform different fns
+--shots can just have one
+
 function groundContact(begin, thisFixture, otherFixture, contact)
 	local thisResponse = thisFixture:getUserData()
 	local otherResponse = otherFixture:getUserData()
@@ -244,6 +248,11 @@ function bodyContact(begin, thisFixture, otherFixture, contact)
 				entityToEntityContact(thisResponse.entity,otherResponse.entity,begin)
 				entityToEntityContact(otherResponse.entity,thisResponse.entity,begin)
 				return
+			end
+			
+			local contactFunc = thisResponse.entity.onContact['world']
+			if (contactFunc) then
+				contactFunc(thisResponse.entity,nil,begin)
 			end
 			
 			--kinetic collision damage
@@ -357,6 +366,7 @@ function game:addWalkerBody(r,entity)
 	bodyResponse.entity = entity
 	bodyResponse.onContact = bodyContact
 	entity.f:setUserData(bodyResponse)
+	
 	return bodyResponse
 end
 
@@ -452,11 +462,12 @@ function game:init(inFileName)
 	
 	--self:addBlock(256,256,"cyl")
 	--self:addBlock(256,320,"cyl")
-	self:addBlock(256,384,"cyl")
-	
+	--[[
+	self:addBlock(256,384,"cyl")	
 	self:addBlock(420,56,"cyl")
 	self:addBlock(500,20,"cyl")
 	self:addBlock(380,84,"cyl")
+	]]--
 	
 	app.player.hero = heroLib.makeHero(self,1864,64)
 	
@@ -538,7 +549,7 @@ end
 function game:spawnEnemyThrown( entity, vx, vy, category )
 	local biff = newEntity(entity.x,entity.y - 80,'enemyShot')
 	biff.onContact['hero'] = onShotContactEnemy
-	imageLib.addRenderableSprite(biff.renderables,heroImages["common"],1.0,1.0,testFrame)
+	imageLib.addRenderableSprite(biff.renderables,heroImages["common"],1.0,1.0,48)
 	self:addSphereToEntity(8,biff)
 	self:addObject('shots',biff)
 	biff.b:setLinearVelocity(vx,vy)
@@ -1093,7 +1104,7 @@ function love.load()
 	love.mouse.setGrab(true)
 	
 	app:init()
-	local level = app:loadLevel("2.tmx")
+	local level = app:loadLevel("1.tmx")
 	app.state = level
 	app.playerLevel = app.state
 end
@@ -1133,11 +1144,6 @@ function love.keypressed(key, unicode)
 		hero.weapons.main.type = 'knife'
 	end
 	
-	if (key == '6') then
-		testFrame = testFrame + 1
-	elseif (key == '7') then
-		testFrame = testFrame - 1
-	end
 end
 
 function love.draw()
