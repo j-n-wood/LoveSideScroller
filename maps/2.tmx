@@ -182,7 +182,16 @@
   </object>
  </objectgroup>
  <objectgroup name="Enemies" width="100" height="100">
-  <object name="boss1" type="makeBoss_1" x="2508" y="161"/>
+  <object name="boss1" type="makeBoss_1" x="2576" y="162">
+   <properties>
+    <property name="delay" value=""/>
+   </properties>
+  </object>
+  <object name="spawner_1" type="makeEnemy_0" x="2297" y="235">
+   <properties>
+    <property name="shotType" value="bolt"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Items" width="100" height="100">
   <object type="gold" gid="256" x="2125" y="380"/>
@@ -193,16 +202,19 @@
   </properties>
   <object name="trigger_1" type="trigger" x="1665" y="176" width="91" height="112">
    <properties>
-    <property name="target" value="spawner_1"/>
-    <property name="targetClass" value="Triggers"/>
-   </properties>
-  </object>
-  <object name="spawner_1" type="spawner" x="2297" y="235">
-   <properties>
     <property name="action" value="spawn"/>
     <property name="count" value="2"/>
-    <property name="delay" value="10"/>
-    <property name="spawnFunction" value="makeEnemy_1"/>
+    <property name="delay" value="4"/>
+    <property name="target" value="spawner_1"/>
+    <property name="targetClass" value="Enemies"/>
+   </properties>
+  </object>
+  <object name="boss_trigger" type="trigger" x="2099" y="174" width="91" height="112">
+   <properties>
+    <property name="action" value="spawn"/>
+    <property name="count" value="1"/>
+    <property name="target" value="boss1"/>
+    <property name="targetClass" value="Enemies"/>
    </properties>
   </object>
  </objectgroup>

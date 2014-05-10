@@ -606,7 +606,7 @@ heroNearObject = function( hero, obj )
 	local ox = obj.x
 	local oy = obj.y + obj.height
 	local dx = (hero.x - ox)
-	local dy = (oy-hero.y)
+	local dy = (oy-hero.y+5) --small adjustment for ground level
 	--print(dx,dy,ox,oy,hero.x,hero.y)
 	if (dx >= -32.0) and (dy >= 0) and (dx < obj.width + 64) and (dy < obj.height) then
 		return true
@@ -614,27 +614,29 @@ heroNearObject = function( hero, obj )
 	return false
 end
 
-function doAction( target, dt )
-	local props = target.properties
+function doAction( obj, dt )
+	local target = app.playerLevel.level:findObject(obj.properties.targetClass or 'Switches',obj.properties.target)
+
+	local props = obj.properties
 	if (not props.count) then
 		props.count = 1
 	end	
-	--print (target.timer, props.count)
+	--print (target.timer, props.count)	
 	if (props.count > 0) then
-		if not target.timer then target.timer = 0.0 end		
-		if (target.timer > 0.0) then
-			target.timer = math.max(target.timer - dt, 0.0)
+		if not obj.timer then obj.timer = 0.0 end		
+		if (obj.timer > 0.0) then
+			obj.timer = math.max(obj.timer - dt, 0.0)
 		else
-			--print(target.type, target.name, props.action, target.properties.count, target.properties.delay, target.properties.spawnFunction)
+			props.count = props.count - 1
 			--TODO - use metatables to attach actions to objects
 			--TODO - target could be an Entity, not an object in the map
-			local actionSet = objectTypes[target.type] or target
+			local actionSet = objectTypes[obj.type] or target
 			local action = actionSet.actions[props.action]			
 			if action then
-				print('found action')				
-				action(target, target)
+				--print('found action',props.action)				
+				action(target, obj)
 			end
-			target.timer = (props.delay or 6.0)				
+			obj.timer = (props.delay or 6.0)				
 		end --timer
 	end --count
 end
@@ -683,30 +685,28 @@ function game:checkObjects( layer, hero, dt )
 			elseif obj.type == 'trigger' then
 				--rectangle trigger
 				
-				--how many times will it trigger?
-				--start with just once
-				local doTrigger = false
-				if ( not obj.triggered ) then
-					if ( heroNearObject( hero, obj ) ) then
-						obj.triggered = true
-						doTrigger = true
-					end
-				end
-				
-				if ( doTrigger ) then
-					local target = self.level:findObject(obj.properties.targetClass or 'Switches',obj.properties.target)
-					if target then
-						if not target.active then
-							target.active = true
-						end
-						doAction(target,dt)
-					end --target found
-				end -- near trigger
-			else				
 				--repeating triggers, spawners, etc
 				if (obj.active and obj.properties.action) then
 					doAction( obj, dt )
 				end
+				
+				--how many times will it trigger?
+				--start with just once
+				local doTrigger = false
+				if ( not obj.triggered ) then					
+					if ( heroNearObject( hero, obj ) ) then
+						obj.triggered = true
+						doTrigger = true
+						print('triggered',obj.name)
+					end
+				end
+				
+				if ( doTrigger ) then										
+					if not obj.active then
+						obj.active = true
+					end
+					doAction(obj,dt)
+				end -- near trigger
 			end
 		end
 	end
@@ -892,6 +892,24 @@ function game:makeItemFromObject(obj)
 	end
 end
 
+function game:makeEnemy(obj)
+	if (obj) and (not obj.delay) then
+		print('Enemy at',obj.x,obj.y,obj.type)
+		if (not enemyLib[obj.type]) then
+			print('Unknown enemy type',obj.type)
+			return
+		end
+		local newEnemy = enemyLib[obj.type](self,obj.x,obj.y)
+		newEnemy.name = obj.name
+		--set custom properties
+		--maybe not use simple assignment, as cannot set function references this way
+		--set 'special' props by name, then use simple assignment for other cases
+		for name, value in pairs(obj.properties) do
+			newEnemy[name] = value
+		end
+	end
+end
+
 function game:load(inFileName)
 	print("Load level file " .. inFileName)
 	self.fileName = inFileName
@@ -968,24 +986,13 @@ function game:load(inFileName)
 		l.bounds.bottom = l.bottom * 32
 	end
 	
-	function makeEnemy(obj)
-		if (obj) and (not obj.delay) then
-			print('Enemy at',obj.x,obj.y,obj.type)
-			if (not enemyLib[obj.type]) then
-				print('Unknown enemy type',obj.type)
-				return
-			end
-			local newEnemy = enemyLib[obj.type](self,obj.x,obj.y)
-			newEnemy.name = obj.name
-			--set custom properties
-			--maybe not use simple assignment, as cannot set function references this way
-			--set 'special' props by name, then use simple assignment for other cases
-			for name, value in pairs(obj.properties) do
-				newEnemy[name] = value
-			end
+	local function processMapEnemy(obj)
+		if (obj.properties.immediate) then
+			self:makeEnemy(obj)
 		end
-	end	
-	self.level:scanObjects('Enemies',makeEnemy)
+	end
+
+	self.level:scanObjects('Enemies',processMapEnemy)
 	
 	function makeItem(obj)
 		self:makeItemFromObject(obj)
@@ -1104,7 +1111,7 @@ function love.load()
 	love.mouse.setGrab(true)
 	
 	app:init()
-	local level = app:loadLevel("1.tmx")
+	local level = app:loadLevel("2.tmx")
 	app.state = level
 	app.playerLevel = app.state
 end

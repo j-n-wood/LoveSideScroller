@@ -35,6 +35,10 @@ end
 
 local boss_1_StandControls = function(enemy)
 	boss_1_commonControls(enemy)
+	if (math.random() > 0.7) then
+		enemy:setState('attack')
+		return false
+	end
 	if (enemy.controls.turnCooldown <= 0.0) then
 		enemy.controls.turnCooldown = math.random() * 2.0 + 1.0
 		if (math.random() > 0.5) then

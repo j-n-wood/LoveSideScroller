@@ -54,21 +54,22 @@ objectTypes['door'] =
 	}, 
 }
 
-objectTypes['spawner'] = 
+objectTypes['trigger'] = 
 { 
 	actions = 
-	{ ['spawn'] = function(object,sender)
-			print('Spawn')
-			if (not object.properties.count) then
-				object.properties.count = 1
+	{ ['spawn'] = function(object,sender)						
+			print('Spawn',object.type)
+
+			--find target (an enemy spawn point)
+			--[[
+			if object.properties.spawnFunction then
+				enemyLib[object.properties.spawnFunction](app.playerLevel,object.x,object.y)
+				TEsound.play(soundCache.soundSets.spawn)
 			end
-			if (object.properties.count > 0) then				
-				object.properties.count = object.properties.count - 1
-				if object.properties.spawnFunction then
-					enemyLib[object.properties.spawnFunction](app.playerLevel,object.x,object.y)
-					TEsound.play(soundCache.soundSets.spawn)
-				end
-			end
+			]]--
+			app.playerLevel:makeEnemy(object)
+			TEsound.play(soundCache.soundSets.spawn)
+
 		end
 	}, 
 }

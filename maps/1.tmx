@@ -228,7 +228,11 @@
     <property name="life" value="12"/>
    </properties>
   </object>
-  <object type="makeEnemy_1" x="2553" y="161"/>
+  <object type="makeEnemy_1" x="2553" y="161">
+   <properties>
+    <property name="delay" value=""/>
+   </properties>
+  </object>
   <object type="makeEnemy_2" x="1187" y="264"/>
   <object type="makeEnemy_3" x="2146" y="92"/>
   <object type="makeEnemy_3" x="2472" y="182"/>
